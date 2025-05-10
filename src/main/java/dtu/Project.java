@@ -12,6 +12,7 @@ public class Project {
     private String projectLeaderName;
     Map<String, Integer> developerActivityHashmap; 
     private Schedule schedule = Schedule.getInstance();
+    private int projectTotalHours;
     //private Schedule schedule = new Schedule();
 
     public Project(String projectName, int projectID) {
@@ -84,5 +85,13 @@ public class Project {
         }
         return activtyReturner;
         */
+    }
+
+    public int getTotalProjectHours() {
+        int hourCount = 0;
+        for (Activity a : activities) {
+            hourCount += a.getTotalHoursLogged();
+        }
+        return hourCount;
     }
 }

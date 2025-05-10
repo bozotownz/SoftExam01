@@ -1,3 +1,5 @@
+#tror ikke vi har brug for den her. man kan bare log 2 timer mere
+
 #Feature: Time Entry Modification
 #As a developer
 #I want to modify my logged hours
