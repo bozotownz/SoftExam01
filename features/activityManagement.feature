@@ -15,6 +15,7 @@ Scenario: Create a new activity
     And set the start date to "2025-10-01" and end date to "2025-10-14"
     Then the activity should be added to the project
 
+#denne scenario er irrelevant ikke?
 #Scenario: Schedule future activity
 #    Given I am logged in as a project leader
 #    When I create an activity "Implementation"

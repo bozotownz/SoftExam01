@@ -57,7 +57,4 @@ public class ActivityManagementSteps {
         schedule.findProjectByID(projectID).addActivity(activity);
         assertTrue(schedule.findProjectByID(projectID).getActivities().contains(activity));
     }
-
-
-    
 }

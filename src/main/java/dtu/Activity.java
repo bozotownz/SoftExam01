@@ -2,7 +2,9 @@ package dtu;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Activity {
     
@@ -11,6 +13,8 @@ public class Activity {
     private LocalDate startDate;
     private LocalDate endDate;
     private List<String> assignedDevelopersActivity = new ArrayList<>();
+    private int loggedBudgetHours = 0;
+    private Map<String, Integer> developersLoggedHours = new HashMap<>(); 
 
     //Fuld constructor, med samtlige felter udfyldt fra start
     public Activity(String actName, int budgetHours, LocalDate starDate, LocalDate endDate) {
@@ -41,6 +45,14 @@ public class Activity {
         return endDate;
     }
 
+    public int getTotalHoursLogged() {
+        return loggedBudgetHours;
+    }
+    
+    public int getTotalHoursLoggedForDeveloper(String developerName) {
+        return developersLoggedHours.get(developerName);
+    }
+
     public void setBudgetHours(int hours) {
         this.budgetHours = hours;
     }
@@ -57,6 +69,7 @@ public class Activity {
     public void assignDeveloper(String developerName) {
         if (!assignedDevelopersActivity.contains(developerName)) {
             assignedDevelopersActivity.add(developerName);
+            developersLoggedHours.put(developerName, 0);
         }
     }
 
@@ -71,6 +84,21 @@ public class Activity {
     public List<String> getDevelopersAssignedToActivity() {
         return assignedDevelopersActivity;
     }
+
+    public void logHours(String developerName, int hoursToLog) {
+        int tempHours;
+        if (developersLoggedHours.get(developerName) >= 0) {
+            tempHours = developersLoggedHours.get(developerName);
+        } else {
+            tempHours = 0;
+        }
+        developersLoggedHours.put(developerName, tempHours + hoursToLog);
+        logHoursTotal(hoursToLog);
+    }
+    public void logHoursTotal(int hoursToLog) {
+        loggedBudgetHours += hoursToLog;
+    }
+
 
     
 }

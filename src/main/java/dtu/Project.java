@@ -66,13 +66,23 @@ public class Project {
         return developerActivityHashmap;
     }
     
-    private Activity findActivityByName(String activtyName) {
+    public Activity findActivityByName(String activityName) {
         Activity activtyReturner = null;
+
+        for (Activity a : activities) {
+            if (a.getName().equals(activityName)) {
+                return a;
+            }
+        }
+        return null;
+        
+        /*
         for (Activity a : schedule.findProjectByID(projectID).getActivities()) {
             if (a.getName().equals(activtyName)) {
                 activtyReturner = a;
             }
         }
         return activtyReturner;
+        */
     }
 }
