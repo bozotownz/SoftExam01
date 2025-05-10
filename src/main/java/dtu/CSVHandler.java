@@ -15,7 +15,7 @@ public class CSVHandler {
     //Method for loading from the files in the db folder - Done like this to avoid 2d arrays saved to csv files
     public static Schedule loadScheduleFromCSV() throws IOException {
         Schedule schedule = Schedule.getInstance();
-        schedule.reset(); // Clear existing data
+        schedule.reset();
 
         // Load metadata
         loadConfig(schedule);
