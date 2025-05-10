@@ -1,4 +1,4 @@
-package dtu.example.ui.Users;
+package dtu.Users;
 
 public class ProjectManager extends User {
 

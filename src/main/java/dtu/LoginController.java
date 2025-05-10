@@ -43,6 +43,7 @@ public class LoginController {
 
     public boolean loggedIn() {
         //What is this?
+        // no clue. ask anton.
         loggedInFlag = false;
         return loggedInFlag;
     }
