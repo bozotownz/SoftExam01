@@ -96,6 +96,10 @@ public class Activity {
         logHoursTotal(hoursToLog);
     }
 
+     public void editLoggedHours(String developerName, int hoursToLog) {
+        developersLoggedHours.put(developerName,hoursToLog);
+    }
+
     public void logHoursTotal(int hoursToLog) {
         loggedBudgetHours += hoursToLog;
     }
