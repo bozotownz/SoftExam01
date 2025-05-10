@@ -26,6 +26,13 @@ public class Schedule {
         changeRespondsText("added", project.getProjectName());
     }
 
+    public int getProjectIterator() {
+    return projectIterator;
+    }
+
+    public void setProjectIterator(int projectIterator) {
+    this.projectIterator = projectIterator;
+    }
 
     //Given the current use of this, why does it even return a project rather than just try to add it?
     public Project createProject(String projectName) {

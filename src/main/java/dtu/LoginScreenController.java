@@ -6,8 +6,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.input.MouseEvent;
 
-import java.util.List;
-
 public class LoginScreenController {
 
 
@@ -23,14 +21,23 @@ public class LoginScreenController {
     private LoginController loginController = new LoginController();
 
 
-
-
-
-
     @FXML
     public void initialize() {
         loginButton.setOnMouseClicked(this::loginButton);
         loginController.loadUsers();
+        
+        loadScheduleData();
+    }
+    
+    private void loadScheduleData() {
+        try {
+            // Load the entire schedule (projects, activities, etc.) from CSV files
+            Schedule schedule = CSVHandler.loadScheduleFromCSV();
+            loginStatusLabel.setText("Data loaded successfully");
+        } catch (Exception e) {
+            e.printStackTrace();
+            loginStatusLabel.setText("Error loading data: " + e.getMessage());
+        }
     }
 
 

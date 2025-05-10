@@ -95,10 +95,13 @@ public class Activity {
         developersLoggedHours.put(developerName, tempHours + hoursToLog);
         logHoursTotal(hoursToLog);
     }
+
     public void logHoursTotal(int hoursToLog) {
         loggedBudgetHours += hoursToLog;
     }
 
+    public void setLoggedBudgetHours(int hours) {
+    this.loggedBudgetHours = hours;
+    }
 
-    
 }
