@@ -10,11 +10,11 @@
    <children>
       <ScrollPane fitToHeight="true" fitToWidth="true" layoutX="9.0" prefHeight="640.0" prefWidth="1110.0" style="-fx-background-color: SKYBLUE;" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="15.0">
          <content>
-            <FlowPane hgap="20.0" prefHeight="640.0" prefWidth="1110.0" rowValignment="TOP" style="-fx-background-color: SKYBLUE;" vgap="20.0">
+            <FlowPane fx:id="projectFlowPane" hgap="20.0" prefHeight="640.0" prefWidth="1110.0" rowValignment="TOP" style="-fx-background-color: SKYBLUE;" vgap="20.0">
                <children>
-                  <Button fx:id="createNewProjectButton" mnemonicParsing="false" prefHeight="140.0" prefWidth="175.0" style="-fx-background-color: DARKGREY;" text="Add New Project" textAlignment="CENTER" wrapText="true">
+                  <Button fx:id="createNewProjectButton" mnemonicParsing="false" prefHeight="150.0" prefWidth="200.0" style="-fx-background-color: DARKGREY;" text="Add New Project" textAlignment="CENTER" wrapText="true">
                      <font>
-                        <Font name="Calibri Bold" size="22.0" />
+                        <Font name="Calibri Bold" size="26.0" />
                      </font>
                   </Button>
                </children>

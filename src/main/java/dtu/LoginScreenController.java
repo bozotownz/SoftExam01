@@ -33,10 +33,10 @@ public class LoginScreenController {
         try {
             // Load the entire schedule (projects, activities, etc.) from CSV files
             Schedule schedule = CSVHandler.loadScheduleFromCSV();
-            loginStatusLabel.setText("Data loaded successfully");
+            System.out.println("Data loaded successfully");
         } catch (Exception e) {
             e.printStackTrace();
-            loginStatusLabel.setText("Error loading data: " + e.getMessage());
+            System.err.println("Error loading data: " + e.getMessage());
         }
     }
 

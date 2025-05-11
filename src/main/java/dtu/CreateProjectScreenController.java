@@ -5,6 +5,7 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 
@@ -22,6 +23,10 @@ public class CreateProjectScreenController extends SubpageController {
     @FXML
     private Button createProjectButton, cancelButton;
 
+    @FXML
+    private Label errorMessageLabel;
+
+
 
     @FXML
     public void initialize() {
@@ -32,21 +37,27 @@ public class CreateProjectScreenController extends SubpageController {
     }
 
     public void createProjectButton(MouseEvent click) {
-        if (!projectNameField.getText().isEmpty()) {
+        //This should probably be a switch
+
+        if (projectNameField.getText().isEmpty()) {
+            errorMessageLabel.setText("Project Name Cannot Be Empty");
+            throw new RuntimeException("Project Name Cannot Be Empty");
+        } else if (projectNameField.getText().length() > 30) { //Arbitrary limit - This isn't very robust and should ideally be text formatting instead if scalability is needed.
+            errorMessageLabel.setText("Project Name Cannot Exceed 30 Symbols");
+            throw new RuntimeException("Project Name Cannot Exceed 30 Symbols");
+        } else {
             try {
-                //ADD LOGIC HERE TO ACTUALLY ADD IT
-                Schedule.getInstance().createProject(projectNameField.getText());
-
-
+                Schedule currentSchedule = Schedule.getInstance();
+                Project newProj = currentSchedule.createProject(projectNameField.getText()); //Need the ref to construct the tile without reload of db.
+                currentSchedule.addProject(newProj);
+                //ADD THE PROJECT TILE TO THE PROJECT SCREEN
+                mainScreenController.allProjectsScreenController.addNewProjectTile(newProj);
+                mainScreenController.swapToAllProjectsScreen(click);
 
             } catch (Exception e) {
                 e.printStackTrace();
             }
-        } else {
-            throw new RuntimeException("Project name cannot be empty");
         }
-
-
 
     }
 
@@ -67,6 +78,7 @@ public class CreateProjectScreenController extends SubpageController {
         userList.add("test2");
         selectProjectManagerField.setItems(FXCollections.observableArrayList(userList));
     }
+
 
 
 }
