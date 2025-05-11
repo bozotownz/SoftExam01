@@ -68,14 +68,17 @@ public class Project {
     }
     
     public Activity findActivityByName(String activityName) {
-        Activity activtyReturner = null;
+        assert activityName != null;                    //assert 1
+        assert activities != null;                    //assert 2
 
-        for (Activity a : activities) {
-            if (a.getName().equals(activityName)) {
-                return a;
+        for (Activity a : activities) {                 //1
+            if (a.getName().equals(activityName)) {     //2
+                assert a != null;                       //assert 3
+                return a;                               //3
             }
         }
-        return null;
+        assert true;                                    //assert 3  4    
+        return null;                                    //4
         
         /*
         for (Activity a : schedule.findProjectByID(projectID).getActivities()) {
