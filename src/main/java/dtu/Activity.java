@@ -66,35 +66,71 @@ public class Activity {
     }
 
     //Her assignes en dev til en aktivitet
-    public void assignDeveloper(String developerName) {             
-        if (!assignedDevelopersActivity.contains(developerName)) {  // 1
-            assignedDevelopersActivity.add(developerName);          // 2
-            developersLoggedHours.put(developerName, 0);      // 3
-        }                                                           // 4
+    public void assignDeveloper(String developerName) {        
+        assert developerName != null; // Precondition
+
+        int originalSize = assignedDevelopersActivity.size();
+        boolean alreadyAssigned = assignedDevelopersActivity.contains(developerName);   // 1
+
+        if (!alreadyAssigned) {                                                         // 2
+            assignedDevelopersActivity.add(developerName);                              // 3
+            developersLoggedHours.put(developerName, 0);                          // 4
+        }
+        // post
+        assert assignedDevelopersActivity.size() == originalSize ||                     //5
+            assignedDevelopersActivity.size() == originalSize + 1;                      //6
     }
 
     //Her fjerness en dev fra en aktivitet
     public void removeDeveloper(String developerName) {
-        if (assignedDevelopersActivity.contains(developerName)) {
-            assignedDevelopersActivity.remove(developerName);
+        /* //pre
+        assert developerName != null;       // assert 1
+        List<String> initialAssignedDevelopers = new  ArrayList<>(assignedDevelopersActivity);  // assert 2
+
+        if (assignedDevelopersActivity.contains(developerName)) {   // 1
+            assignedDevelopersActivity.remove(developerName);   // 2
+        //post 
+        //condi 1
+        assert !assignedDevelopersActivity.contains(developerName) || !initialAssignedDevelopers.contains(developerName);   // asert 3
+        } else {
+        // condit 2
+        assert assignedDevelopersActivity.equals(initialAssignedDevelopers);    // assert 4
         }
+        */
+        // previous code if it messes with you
+        
+        if (assignedDevelopersActivity.contains(developerName)) {   // 1
+            assignedDevelopersActivity.remove(developerName);   // 2
+        }
+         
     }
 
     //Fremtidig "hurtig" liste over udviklerer der er tildelt en aktivitet. Skal nok ikke bruges.
-    public List<String> getDevelopersAssignedToActivity() {
+    public List<String> getDevelopersAssignedToActivity() { 
         return assignedDevelopersActivity;
     }
 
     public void logHours(String developerName, int hoursToLog) {
+        assert developerName != null;   // assert 1 can comment out/delete if messing with fx
+        assert hoursToLog >= 0; // assert 2 can comment out/delete if messing with fx
+
         int tempHours;
-        if (developersLoggedHours.get(developerName) >= 0) {
-            tempHours = developersLoggedHours.get(developerName);
+        if (developersLoggedHours.get(developerName) >= 0) {    // 1 
+            tempHours = developersLoggedHours.get(developerName);   // 2
         } else {
-            tempHours = 0;
+            tempHours = 0;      // 3
         }
-        developersLoggedHours.put(developerName, tempHours + hoursToLog);
-        logHoursTotal(hoursToLog);
+
+        int oldTotal = loggedBudgetHours;   // can comment out/delete if messing with fx
+        int oldDeveloperHours = developersLoggedHours.getOrDefault(developerName, 0); // can comment out/delete if messing with fx
+        
+        developersLoggedHours.put(developerName, tempHours + hoursToLog);   // 4
+        logHoursTotal(hoursToLog);      // 5
+
+        assert developersLoggedHours.get(developerName) == oldDeveloperHours + hoursToLog;  // assert 3 can comment out/delete if messing with fx
+        assert loggedBudgetHours == oldTotal + hoursToLog;  // assert 4 can comment out/delete if messing with fx
     }
+
 
      public void editLoggedHours(String developerName, int hoursToLog) {
         developersLoggedHours.put(developerName,hoursToLog);

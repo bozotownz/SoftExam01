@@ -79,7 +79,6 @@ public class Project {
         }
         assert true;                                    //assert 3  4    
         return null;                                    //4
-        
         /*
         for (Activity a : schedule.findProjectByID(projectID).getActivities()) {
             if (a.getName().equals(activtyName)) {
@@ -98,3 +97,5 @@ public class Project {
         return hourCount;
     }
 }
+
+
