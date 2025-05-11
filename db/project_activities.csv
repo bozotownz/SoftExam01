@@ -2,3 +2,4 @@ projectID,activityName,budgetHours,startDate,endDate
 25001,Design Phase,100,2025-03-01,2025-03-15
 25002,Implementation,200,2025-04-01,2025-04-15
 25002,Planning,50,2025-05-15,2025-07-15
+25003,Bugfixing,90,2025-06-15,2025-07-15

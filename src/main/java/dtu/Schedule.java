@@ -8,7 +8,7 @@ public class Schedule {
     private ArrayList<Project> projects = new ArrayList<>();
 
     private String respondText;
-    private int projectIterator = 1; 
+    private int projectIterator = 4; 
 
 
     public Schedule() {
@@ -106,10 +106,10 @@ public class Schedule {
         return respondText;
     }
 
-    public void reset() {
+    /* public void reset() {
         projects.clear();
         projectIterator = 1;
-    }
+    } */
 
 
     

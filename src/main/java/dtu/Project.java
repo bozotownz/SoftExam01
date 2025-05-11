@@ -13,6 +13,7 @@ public class Project {
     Map<String, Integer> developerActivityHashmap; 
     private Schedule schedule = Schedule.getInstance();
     private int projectTotalHours;
+
     //private Schedule schedule = new Schedule();
 
     public Project(String projectName, int projectID) {
@@ -89,12 +90,28 @@ public class Project {
         */
     }
 
+    //Returnerer loggede timer
     public int getTotalProjectHours() {
         int hourCount = 0;
         for (Activity a : activities) {
             hourCount += a.getTotalHoursLogged();
         }
         return hourCount;
+    }
+
+    //Returnerer budgetterede timer
+    public int getBudgetProjectHours() {
+        int hourCount = 0;
+        for (Activity a : activities) {
+            hourCount += a.getBudgetHours();
+        }
+        return hourCount;
+    }
+
+    //Returnerer tilbageværende timer på et projekt
+    public int getRemainingHours() {
+        int remainingHours = (getBudgetProjectHours() - getTotalProjectHours());
+        return remainingHours;
     }
 }
 
