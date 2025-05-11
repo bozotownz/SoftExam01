@@ -71,7 +71,6 @@ public class SceneManager {
             FXMLLoader mainLoader = new FXMLLoader(getClass().getResource("MainScreen.fxml"));
             mainScene = new Scene(mainLoader.load());
             mainScreenController = mainLoader.getController();
-            mainScreenController.setUsernameLabel(currentUser);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -91,6 +90,10 @@ public class SceneManager {
 
     public void setCurrentUser(String currentUser) {
         this.currentUser = currentUser;
+    }
+
+    public String getCurrentUser() {
+        return currentUser;
     }
 
 }
