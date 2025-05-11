@@ -15,34 +15,35 @@ public class LogHoursWhiteBoxTest {
     }
 
     @Test
-    public void testPath1_DeveloperExists() {
-        // Test for Path 1,2(true),3,4
+    public void testPath1_DeveloperWithExistingHours() {
+        // Test for Path 1,2(true),3,5,6
         // Input Set A: developersLoggedHours = {"Alice": 2}, developerName = "Alice", hoursToLog = 5
 
         // Setup initial state
         activity.assignDeveloper("Alice");
         activity.logHours("Alice", 2); // Initial hours
-
+        
         // Execute the method
         activity.logHours("Alice", 5);
-
+        
         // Verify expected results
         assertEquals(7, activity.getTotalHoursLoggedForDeveloper("Alice")); // 2 + 5 = 7
         assertEquals(7, activity.getTotalHoursLogged()); // Total hours should also be 7
     }
 
     @Test
-    public void testPath2_DeveloperDoesNotExist() {
-        // Test for Path 1,2(false),5
-        // Input Set B: developersLoggedHours = {}, developerName = "Bob", hoursToLog = 3
+    public void testPath2_DeveloperWithNoHours() {
+        // Test for Path 1,2(false),4,5,6
+        // Input Set B: developersLoggedHours = {"Bob": 0}, developerName = "Bob", hoursToLog = 3
 
-        // Execute the method (without first assigning the developer)
+        // Setup initial state - developer exists but hasn't logged hours yet
+        activity.assignDeveloper("Bob");
+        
+        // Execute the method
         activity.logHours("Bob", 3);
-
+        
         // Verify expected results
-        assertThrows(NullPointerException.class, () -> {
-            activity.getTotalHoursLoggedForDeveloper("Bob");
-        });
-        assertEquals(3, activity.getTotalHoursLogged()); // Total hours are still logged
+        assertEquals(3, activity.getTotalHoursLoggedForDeveloper("Bob"));
+        assertEquals(3, activity.getTotalHoursLogged());
     }
 }
