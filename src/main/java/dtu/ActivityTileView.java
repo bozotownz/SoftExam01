@@ -2,6 +2,7 @@ package dtu;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 
 public class ActivityTileView {
@@ -26,7 +27,11 @@ public class ActivityTileView {
         this.subpageController = subpageController;
         activityNameLabel.setText(activity.getName());
         assignedHrsLabel.setText(activity.getBudgetHours() + " Hrs");
+        activityTilePane.setOnMouseClicked(this::openActivityOverviewScreen);
     }
 
+    public void openActivityOverviewScreen(MouseEvent click) {
+        subpageController.mainScreenController.swapToActivityOverviewScreen(activity);
+    }
 
 }

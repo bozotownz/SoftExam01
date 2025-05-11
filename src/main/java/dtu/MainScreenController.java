@@ -148,6 +148,18 @@ public class MainScreenController {
         setCurrentSubScreenLabel("Project Overview");
     }
 
+    public void swapToActivityOverviewScreen(Activity activity) {
+        try {
+            FXMLLoader activityOverviewLoader = new FXMLLoader(getClass().getResource("ActivityOverviewScreen.fxml"));
+            Parent root = activityOverviewLoader.load();
+            ActivityOverviewScreenController activityOverviewScreenController = activityOverviewLoader.getController();
+            activityOverviewScreenController.setActivityOverviewScreen(activity);
+            insertSubScreen(root, activityOverviewScreenController);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 
 
 
