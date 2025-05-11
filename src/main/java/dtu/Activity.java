@@ -66,11 +66,11 @@ public class Activity {
     }
 
     //Her assignes en dev til en aktivitet
-    public void assignDeveloper(String developerName) {
-        if (!assignedDevelopersActivity.contains(developerName)) {
-            assignedDevelopersActivity.add(developerName);
-            developersLoggedHours.put(developerName, 0);
-        }
+    public void assignDeveloper(String developerName) {             
+        if (!assignedDevelopersActivity.contains(developerName)) {  // 1
+            assignedDevelopersActivity.add(developerName);          // 2
+            developersLoggedHours.put(developerName, 0);      // 3
+        }                                                           // 4
     }
 
     //Her fjerness en dev fra en aktivitet
@@ -96,7 +96,7 @@ public class Activity {
         logHoursTotal(hoursToLog);
     }
 
-    public void editLoggedHours(String developerName, int hoursToLog) {
+     public void editLoggedHours(String developerName, int hoursToLog) {
         developersLoggedHours.put(developerName,hoursToLog);
     }
 
