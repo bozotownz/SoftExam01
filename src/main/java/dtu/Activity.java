@@ -17,15 +17,30 @@ public class Activity {
     private Map<String, Integer> developersLoggedHours = new HashMap<>(); 
 
     //Fuld constructor, med samtlige felter udfyldt fra start
-    public Activity(String actName, int budgetHours, LocalDate starDate, LocalDate endDate) {
+    public Activity(String actName, int budgetHours, LocalDate startDate, LocalDate endDate) {
+        if (actName == null || !actName.matches("[a-zA-Z0-9\\s]+")) {
+            throw new IllegalArgumentException("Activity name must contain only letters, numbers, and spaces");
+        }
+
+        if (budgetHours < 0) {
+            throw new IllegalArgumentException("Budget hours must be non-negative");
+        }
+
+        if (startDate != null && endDate != null && startDate.isAfter(endDate)) {
+            throw new IllegalArgumentException("Start date cannot be after end date");
+        }
+
         this.activityName = actName;
         this.budgetHours = budgetHours;
-        this.startDate = starDate;
+        this.startDate = startDate;
         this.endDate = endDate;
     }
 
-    //Constructor kun med navn (alt det andet sættes op senere)
+    //Constructor kun med navn (Kan vi fjerne ovenstående i virkeligheden?)
     public Activity(String actName) {
+        if (actName == null || !actName.matches("[a-zA-Z0-9\\s]+")) {
+            throw new IllegalArgumentException("Activity name must contain only letters, numbers, and spaces");
+        }
         this.activityName = actName;
     }
 
@@ -54,14 +69,23 @@ public class Activity {
     }
 
     public void setBudgetHours(int hours) {
+        if (budgetHours < 0) {
+            throw new IllegalArgumentException("Budget hours must be non-negative");
+        }
         this.budgetHours = hours;
     }
 
     public void setStartDate(LocalDate startDate) {
+        if (this.endDate != null && startDate != null && startDate.isAfter(this.endDate)) {
+            throw new IllegalArgumentException("Start date cannot be after end date");
+        }
         this.startDate = startDate;
     }
 
     public void setEndDate(LocalDate endDate) {
+        if (this.startDate != null && endDate != null && endDate.isBefore(this.startDate)) {
+            throw new IllegalArgumentException("End date cannot be before start date");
+        }
         this.endDate = endDate;
     }
 

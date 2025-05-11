@@ -30,8 +30,11 @@ public class Project {
     }
 
     public void setProjectLeader(String projectLeaderName) {
+        if (projectLeaderName != null && !projectLeaderName.matches("[a-zA-Z]+")) {
+            throw new IllegalArgumentException("Project leader name must contain only letters");
+        }
         this.projectLeaderName = projectLeaderName;
-    }
+    }   
 
     public int getProjectID() {
         return projectID;

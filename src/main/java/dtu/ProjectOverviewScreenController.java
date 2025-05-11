@@ -48,7 +48,7 @@ public class ProjectOverviewScreenController extends SubpageController {
     }
 
     public void updateTimeBudgetLabel() {
-        setTimeBudgetLabel(project.getTotalProjectHours());
+        setTimeBudgetLabel(project.getBudgetProjectHours());
     }
 
     public void setTimeBudgetLabel(int numHours) {

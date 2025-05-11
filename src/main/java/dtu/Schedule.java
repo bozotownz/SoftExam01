@@ -36,12 +36,15 @@ public class Schedule {
 
     //Given the current use of this, why does it even return a project rather than just try to add it?
     public Project createProject(String projectName) {
+        if (projectName == null || !projectName.matches("[a-zA-Z0-9\\\\s]+")) {
+            throw new IllegalArgumentException("Project name must contain only letters, numbers and spaces");
+        }
         int projectID = (Year.now().getValue()-2000)*1000 + projectIterator;
         projectIterator++;
         Project project = new Project(projectName, projectID);
         //addProject(project);
         return project;
-    }
+    }   
 
     public ArrayList<Project> getProjects() {
         return projects;
