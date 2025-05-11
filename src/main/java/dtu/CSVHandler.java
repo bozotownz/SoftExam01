@@ -135,7 +135,7 @@ public class CSVHandler {
     }
 
     private static void loadDeveloperHours(Map<Integer, Project> projectMap) throws IOException {
-        File hoursFile = new File("./db/developer_hours_log.csv");
+        File hoursFile = new File("./db/dev_hours_log.csv");
         
         try (BufferedReader br = new BufferedReader(new FileReader(hoursFile))) {
             br.readLine(); // Skip header - first line of csv files

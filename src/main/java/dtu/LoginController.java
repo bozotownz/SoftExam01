@@ -28,12 +28,14 @@ public class LoginController {
         }
     }
 
+    public HashSet<String> getUsers() {
+        return users;
+    }
 
 
     private void processLine(String line) {
         line = line.replace("\"", "");
-        String[] parts = line.split(",");
-        
+        String[] parts = line.split(",");        
         if (parts.length >= 2) {
             String username = parts[0].trim();
             //String password = parts[1].trim(); //Add this if we need passwords for any reason.
