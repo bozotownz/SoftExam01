@@ -8,6 +8,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import dtu.Activity;
+import org.junit.jupiter.api.Test;
+
+import dtu.Activity;
 
 public class AssignDeveloperWhiteBoxTest {
     private Activity activity;
