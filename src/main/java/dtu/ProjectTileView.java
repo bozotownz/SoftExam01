@@ -30,13 +30,13 @@ public class ProjectTileView {
         this.project = project;
         projNameLabel.setText(project.getProjectName());
         projIDLabel.setText(Integer.toString(project.getProjectID()));
-        projectTilePane.setOnMouseClicked(this::openEditProjectScreen);
+        projectTilePane.setOnMouseClicked(this::openProjectOverviewScreen);
     }
 
 
     //This is some ultra-cursed daisy chaining, but this avoids issues with mainscreencontroller not being fully instantiated when the project tiles are created.
     //This is because JavaFX does not finish instantiating a controller object fully before it finishes all statements in its standardized FXML-Initialize() function.
-    public void openEditProjectScreen(MouseEvent click) {
-        allProjectsScreenController.mainScreenController.swapToEditProjectScreen(project);
+    public void openProjectOverviewScreen(MouseEvent click) {
+        allProjectsScreenController.mainScreenController.swapToProjectOverviewScreen(project);
     }
 }

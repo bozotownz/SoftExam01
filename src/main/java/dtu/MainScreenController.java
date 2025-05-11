@@ -3,7 +3,6 @@ package dtu;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
@@ -26,6 +25,8 @@ public class MainScreenController {
 
 
     protected AllProjectsScreenController allProjectsScreenController; //Preserving this reference so it doesn't get garbo'd by java.
+    protected MyActivitiesScreenController myActivitiesScreenController;
+
 
 
 
@@ -37,7 +38,10 @@ public class MainScreenController {
 
         //This is the start subscreen, only runs once obviously. This could be a lot cleaner but cba.
         currentSubScreenLabel.setText("All Projects");
+        usernameLabel.setText(SceneManager.getInstance().getCurrentUser());
+        initMyActivitiesScreen();
         initAllProjectsScreen();
+
         //loadSubScreen("AllProjectsScreen.fxml");
     }
 
@@ -45,9 +49,6 @@ public class MainScreenController {
         sceneManager.swapToLoginScreen();
     }
 
-    public void setUsernameLabel(String username) {
-        usernameLabel.setText(username);
-    }
 
 
 
@@ -101,6 +102,17 @@ public class MainScreenController {
         }
     }
 
+    public void initMyActivitiesScreen() {
+        try {
+            FXMLLoader myActivitiesScreenLoader = new FXMLLoader(getClass().getResource("MyActivitiesScreen.fxml"));
+            myActivitiesScreenLoader.load();
+            myActivitiesScreenController = myActivitiesScreenLoader.getController();
+            myActivitiesScreenController.setMainController(this);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 
 
     public void swapToAllProjectsScreen(MouseEvent click) {
@@ -118,13 +130,13 @@ public class MainScreenController {
         setCurrentSubScreenLabel("My Activities");
     }
 
-    public void swapToEditProjectScreen(Project project) {
+    public void swapToProjectOverviewScreen(Project project) {
         try {
-            FXMLLoader editProjLoader = new FXMLLoader(getClass().getResource("EditProjectScreen.fxml"));
-            Parent root = editProjLoader.load();
-            EditProjectScreenController editProjectScreenController = editProjLoader.getController();
-            editProjectScreenController.setEditProjScreen(project);
-            insertSubScreen(root, editProjectScreenController);
+            FXMLLoader projOverviewLoader = new FXMLLoader(getClass().getResource("ProjectOverviewScreen.fxml"));
+            Parent root = projOverviewLoader.load();
+            ProjectOverviewScreenController projectOverviewScreenController = projOverviewLoader.getController();
+            projectOverviewScreenController.setProjOverviewScreen(project);
+            insertSubScreen(root, projectOverviewScreenController);
         } catch (Exception e) {
             e.printStackTrace();
         }
