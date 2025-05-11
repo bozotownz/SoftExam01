@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane prefHeight="670.0" prefWidth="1140.0" style="-fx-background-color: SKYBLUE;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dtu.ActivityOverviewScreenController">
+   <children>
+      <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="100.0" style="-fx-background-color: DARKGREY;" text="Back" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="15.0" />
+      <VBox alignment="CENTER" layoutX="370.0" prefHeight="80.0" prefWidth="400.0">
+         <children>
+            <Label fx:id="activityNameLabel" text="activityNameLabel" textAlignment="CENTER" wrapText="true">
+               <font>
+                  <Font name="Calibri Bold" size="26.0" />
+               </font>
+            </Label>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>

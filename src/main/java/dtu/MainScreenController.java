@@ -130,6 +130,11 @@ public class MainScreenController {
         setCurrentSubScreenLabel("My Activities");
     }
 
+    public void swapToCreateActivityScreen() {
+        loadSubScreen("CreateActivityScreen.fxml");
+        setCurrentSubScreenLabel("Creating New Activity");
+    }
+
     public void swapToProjectOverviewScreen(Project project) {
         try {
             FXMLLoader projOverviewLoader = new FXMLLoader(getClass().getResource("ProjectOverviewScreen.fxml"));

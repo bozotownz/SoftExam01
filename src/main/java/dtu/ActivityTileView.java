@@ -25,7 +25,7 @@ public class ActivityTileView {
         this.activity = activity;
         this.subpageController = subpageController;
         activityNameLabel.setText(activity.getName());
-        assignedHrsLabel.setText(Integer.toString(activity.getBudgetHours()));
+        assignedHrsLabel.setText(activity.getBudgetHours() + " Hrs");
     }
 
 

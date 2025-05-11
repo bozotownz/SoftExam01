@@ -66,6 +66,13 @@
                      <padding>
                         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
                      </padding>
+                     <children>
+                        <Button fx:id="createNewActivityButton" mnemonicParsing="false" prefHeight="150.0" prefWidth="200.0" style="-fx-background-color: DARKGREY;" text="Add New Activity" textAlignment="CENTER" wrapText="true">
+                           <font>
+                              <Font name="Calibri Bold" size="26.0" />
+                           </font>
+                        </Button>
+                     </children>
                   </FlowPane>
                </content>
             </ScrollPane>

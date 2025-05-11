@@ -18,13 +18,14 @@ public class ProjectOverviewScreenController extends SubpageController {
     private FlowPane projActivitiesPane;
 
     @FXML
-    private Button cancelButton;
+    private Button cancelButton, createNewActivityButton;
 
     private Project project;
 
     @FXML
     public void initialize() {
         cancelButton.setOnMouseClicked(this::cancelButton);
+        createNewActivityButton.setOnMouseClicked(this::createNewActivityButton);
         setTimeBudgetLabel(0);
     }
 
@@ -40,6 +41,10 @@ public class ProjectOverviewScreenController extends SubpageController {
 
     public void cancelButton(MouseEvent click) {
         mainScreenController.swapToAllProjectsScreen(click);
+    }
+
+    public void createNewActivityButton(MouseEvent click) {
+        mainScreenController.swapToCreateActivityScreen();
     }
 
     public void updateTimeBudgetLabel() {
