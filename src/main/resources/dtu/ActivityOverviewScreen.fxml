@@ -23,5 +23,6 @@
             </Label>
          </children>
       </VBox>
+      <Button fx:id="showAssignedDevelopersButton" layoutX="14.0" layoutY="310.0" mnemonicParsing="false" text="DEBUG BUTTON" />
    </children>
 </AnchorPane>
