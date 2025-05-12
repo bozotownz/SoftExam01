@@ -17,7 +17,7 @@ public class Schedule {//Niels
         }
         return instance;
     }
-    //Niels
+    //Asger
     //Adds project to the list of projects in the schedule
     public void addProject(Project project) {
         projects.add(project);
@@ -27,7 +27,7 @@ public class Schedule {//Niels
     public int getProjectIterator() {
     return projectIterator;
     }
-    //Asger
+    //Anton
     //Sets the project iterator
     public void setProjectIterator(int projectIterator) {
     this.projectIterator = projectIterator;
@@ -58,7 +58,7 @@ public class Schedule {//Niels
         }
         return false;
     }
-    //Mads
+    //Anton
     //Does a project exist with this ID, inside the list of projects
     public boolean projectExistsID(int projectID) {
         assert projectID >= 0;
@@ -71,7 +71,7 @@ public class Schedule {//Niels
         }
         return false;                                           //4
     }
-    //Asger
+    //Anton
     //Returns the project if found
     public Project findProjectByID(int projectID) {
         for (int i = 0; i < projects.size(); i++) {
@@ -103,7 +103,7 @@ public class Schedule {//Niels
         }
         return false;
     }
-    //Anton
+    //Niels
     //Delete the specific project from the project list
     public boolean deleteProjectByRef(Project project) {
         if (project != null) {

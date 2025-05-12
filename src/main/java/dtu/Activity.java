@@ -78,7 +78,7 @@ public class Activity {
         }
         this.budgetHours = hours;
     }
-    // Anton
+    // Niels
     public void setStartDate(LocalDate startDate) {
         if (this.endDate != null && startDate != null && startDate.isAfter(this.endDate)) {
             throw new IllegalArgumentException("Start date cannot be after end date");
