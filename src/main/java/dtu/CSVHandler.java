@@ -8,7 +8,7 @@ import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
 
-
+//Niels
 public class CSVHandler {
 
     //Method for loading from the files in the db folder - Split into different files like this to avoid 2d arrays saved to csv files
