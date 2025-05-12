@@ -190,7 +190,7 @@ public class ProjectOverviewScreenController extends SubpageController {
 
     private void resetComboBoxItems(String selectedLeader) {
         ObservableList<String> newItems = FXCollections.observableArrayList();
-        newItems.add(none); 
+        newItems.add(none);
 
 
         for (String user : allUsersList) {
