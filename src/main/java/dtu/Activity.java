@@ -178,4 +178,9 @@ public class Activity {
     this.loggedBudgetHours = hours;
     }
 
+    //Why did I have to add this? -M
+    public int getRemainingHours() {
+        return Math.max(0, budgetHours - loggedBudgetHours);
+    }
+
 }

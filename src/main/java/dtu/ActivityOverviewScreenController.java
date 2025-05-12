@@ -68,7 +68,7 @@ public class ActivityOverviewScreenController extends SubpageController {
 
         activityNameLabel.setText(activity.getName());
         timeSpanLabel.setText(formatDateRange(activity.getStartDate(), activity.getEndDate()));
-        remainingHoursLabel.setText(Integer.toString(activity.getBudgetHours()));
+        remainingHoursLabel.setText(Integer.toString(activity.getRemainingHours()));
         updateAssignedDevsListOverview();
         if (!activity.getDevelopersAssignedToActivity().contains(SceneManager.getInstance().getCurrentUser())) {
             logHoursButton.setDisable(true);
@@ -173,7 +173,7 @@ public class ActivityOverviewScreenController extends SubpageController {
         } else {
             activity.logHours(SceneManager.getInstance().getCurrentUser(), hoursToLog);
         }
-        remainingHoursLabel.setText(Integer.toString(activity.getBudgetHours()));
+        remainingHoursLabel.setText(Integer.toString(activity.getRemainingHours()));
     }
 
     private void updateAssignedDevsListOverview() {
