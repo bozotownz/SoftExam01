@@ -31,7 +31,7 @@ public class CreateProjectScreenController extends SubpageController {
 
     private ObservableList<String> assignableUsersList;
 
-    private String currentLeader = null;
+    private String currentLeader = null, none = "NONE";
 
 
 
@@ -80,28 +80,45 @@ public class CreateProjectScreenController extends SubpageController {
     public void setupUsersList() {
         allUsersList.addAll(SceneManager.getInstance().getAllUsers());
         assignableUsersList = FXCollections.observableArrayList(allUsersList);
-        selectProjectManagerField.setValue(null);
+        resetComboBoxItems(null);
         selectProjectManagerField.setItems(assignableUsersList);
     }
 
     public void setupLeaderSelection() {
         selectProjectManagerField.setOnAction(event -> {
-            String newLeader = selectProjectManagerField.getValue();
+            String selected = selectProjectManagerField.getValue();
 
-            // Skip if same as before or null
-            if (newLeader == null || newLeader.equals(currentLeader)) return;
+            if (selected == null) return;
 
-            currentLeader = newLeader;
-
-            // Rebuild list: show all users except the selected one
-            List<String> updatedList = allUsersList.stream()
-                    .filter(user -> !user.equals(currentLeader))
-                    .collect(Collectors.toList());
-
-            selectProjectManagerField.setItems(FXCollections.observableArrayList(updatedList));
-            selectProjectManagerField.getItems().add(0, currentLeader); // keep selected at top
-            selectProjectManagerField.setValue(currentLeader);
+            if (selected.equals(none)) {
+                currentLeader = null;
+                resetComboBoxItems(null);
+            } else if (!selected.equals(currentLeader)) {
+                currentLeader = selected;
+                resetComboBoxItems(currentLeader);
+                selectProjectManagerField.setValue(currentLeader);
+            }
         });
+    }
+
+
+    private void resetComboBoxItems(String selectedLeader) {
+        ObservableList<String> newItems = FXCollections.observableArrayList();
+        newItems.add(none); // Always at the top
+
+        // Add all users except the currently selected leader (if any)
+        for (String user : allUsersList) {
+            if (!user.equals(selectedLeader)) {
+                newItems.add(user);
+            }
+        }
+
+        // If a leader is selected, add them back for display
+        if (selectedLeader != null) {
+            newItems.add(1, selectedLeader); // Keep leader near top
+        }
+
+        selectProjectManagerField.setItems(newItems);
     }
 
 

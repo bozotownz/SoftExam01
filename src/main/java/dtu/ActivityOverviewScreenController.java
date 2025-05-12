@@ -167,12 +167,13 @@ public class ActivityOverviewScreenController extends SubpageController {
     private void submitHoursLogged(MouseEvent click) {
         int hoursToLog = Integer.parseInt(logHoursField.getText());
         if (hoursToLog == 0) {
-
+            //Show error label or something
         } else if (hoursToLog > activity.getBudgetHours()) {
-
+            //Show another error label maybe
         } else {
             activity.logHours(SceneManager.getInstance().getCurrentUser(), hoursToLog);
         }
+        remainingHoursLabel.setText(Integer.toString(activity.getBudgetHours()));
     }
 
     private void updateAssignedDevsListOverview() {

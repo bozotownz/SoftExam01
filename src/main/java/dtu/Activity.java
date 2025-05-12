@@ -129,7 +129,6 @@ public class Activity {
          
     }
 
-    //Fremtidig "hurtig" liste over udviklerer der er tildelt en aktivitet. Skal nok ikke bruges.
     public List<String> getDevelopersAssignedToActivity() { 
         return assignedDevelopersActivity;
     }
