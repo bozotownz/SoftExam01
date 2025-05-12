@@ -40,8 +40,7 @@ public class ActivityTileView {
         this.originProject = originProject;
         hasOriginProject = true;
     }
-
-    //This is such a bad way of doing it. The proper way is to use a stack and simply pop it to return to the previous screen.
+    
     public void openActivityOverviewScreen(MouseEvent click) {
         if (hasOriginProject) {
             subpageController.mainScreenController.swapToActivityOverviewScreenFromProject(activity, originProject);

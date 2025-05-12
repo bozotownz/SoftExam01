@@ -21,8 +21,6 @@ Background:
     And set the start date to "2025-10-01" and end date to "2025-10-14"
     Then the activity should be added to the project
 
-
-
 Scenario: Assign a developer
     Given I "huba" logged in as a project leader for project 25001
     When I assign developer "DEI" to activity "TempActivity"
@@ -33,7 +31,3 @@ Scenario: Unassign a developer
     And I assign developer "DEI" to activity "TempActivity"
      When I remove the developer
      Then the system should remove the assignment
-    #var nødt til at gøre det på denne måde 
-    #Given developer "DEI" is assigned to activity "TempActivity"
-    #When I remove the developer
-    #Then the system should remove the assignment

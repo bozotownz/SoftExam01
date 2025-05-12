@@ -14,8 +14,7 @@ public class Project {
     private Schedule schedule = Schedule.getInstance();
     private int projectTotalHours;
 
-    //private Schedule schedule = new Schedule();
-
+    //Project constructor 
     public Project(String projectName, int projectID) {
         this.projectName = projectName;
         this.projectID = projectID;
@@ -29,6 +28,7 @@ public class Project {
         return projectLeaderName;
     }
 
+    //Set project lead with check for correct input
     public void setProjectLeader(String projectLeaderName) {
         if (projectLeaderName != null && !projectLeaderName.matches("[a-zA-Z]+")) {
             throw new IllegalArgumentException("Project leader name must contain only letters");
@@ -48,7 +48,7 @@ public class Project {
         return activities;
     }
 
-
+    //Asger FIX - gør kommentering pæn
     public Map<String, Integer> getDeveloperActivityLoadForInterval(LocalDate searchStartDate, LocalDate searchEndDate) {
         developerActivityHashmap = new HashMap<>();
         
@@ -71,9 +71,10 @@ public class Project {
         return developerActivityHashmap;
     }
     
+    //Returns an activity based off the name
     public Activity findActivityByName(String activityName) {
         assert activityName != null;                    //assert 1
-        assert activities != null;                    //assert 2
+        assert activities != null;                      //assert 2
 
         for (Activity a : activities) {                 //1
             if (a.getName().equals(activityName)) {     //2
@@ -83,17 +84,9 @@ public class Project {
         }
         assert true;                                    //assert 3  4    
         return null;                                    //4
-        /*
-        for (Activity a : schedule.findProjectByID(projectID).getActivities()) {
-            if (a.getName().equals(activtyName)) {
-                activtyReturner = a;
-            }
-        }
-        return activtyReturner;
-        */
     }
 
-    //Returnerer loggede timer
+    //Returns logged hours
     public int getTotalProjectHours() {
         int hourCount = 0;
         for (Activity a : activities) {
@@ -102,7 +95,7 @@ public class Project {
         return hourCount;
     }
 
-    //Returnerer budgetterede timer
+    //Returns budgetted (planned) hours
     public int getBudgetProjectHours() {
         int hourCount = 0;
         for (Activity a : activities) {
@@ -111,7 +104,7 @@ public class Project {
         return hourCount;
     }
 
-    //Returnerer tilbageværende timer på et projekt
+    //Returns remaining hours on a project
     public int getRemainingHours() {
         int remainingHours = (getBudgetProjectHours() - getTotalProjectHours());
         return remainingHours;

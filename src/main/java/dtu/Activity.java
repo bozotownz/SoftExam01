@@ -9,14 +9,18 @@ import java.util.Map;
 public class Activity {
     
     private final String activityName;
-    private int budgetHours;
+
     private LocalDate startDate;
     private LocalDate endDate;
     private List<String> assignedDevelopersActivity = new ArrayList<>();
-    private int loggedBudgetHours = 0;
     private Map<String, Integer> developersLoggedHours = new HashMap<>(); 
+    //How many hours are planned for work
+    private int budgetHours;
+    //How many hours are actually spent on work
+    private int loggedBudgetHours = 0;
+    
 
-    //Fuld constructor, med samtlige felter udfyldt fra start
+    //Full constructor with all fields
     public Activity(String actName, int budgetHours, LocalDate startDate, LocalDate endDate) {
         if (actName == null || !actName.matches("[a-zA-Z0-9\\s]+")) {
             throw new IllegalArgumentException("Activity name must contain only letters, numbers, and spaces");
@@ -36,7 +40,7 @@ public class Activity {
         this.endDate = endDate;
     }
 
-    //Constructor kun med navn (Kan vi fjerne ovenstående i virkeligheden?)
+    //Partial constructor with only name required
     public Activity(String actName) {
         if (actName == null || !actName.matches("[a-zA-Z0-9\\s]+")) {
             throw new IllegalArgumentException("Activity name must contain only letters, numbers, and spaces");
@@ -89,7 +93,7 @@ public class Activity {
         this.endDate = endDate;
     }
 
-    //Her assignes en dev til en aktivitet
+    //Dev assigned to activity
     public void assignDeveloper(String developerName) {        
         assert developerName != null; // Precondition
 
@@ -105,7 +109,7 @@ public class Activity {
             assignedDevelopersActivity.size() == originalSize + 1;                      //6
     }
 
-    //Her fjerness en dev fra en aktivitet
+    //Dev removed from activity //ASGER FORKLAR og check
     public void removeDeveloper(String developerName) {
         /* //pre
         assert developerName != null;       // assert 1
@@ -115,7 +119,7 @@ public class Activity {
             assignedDevelopersActivity.remove(developerName);   // 2
         //post 
         //condi 1
-        assert !assignedDevelopersActivity.contains(developerName) || !initialAssignedDevelopers.contains(developerName);   // asert 3
+        assert !assignedDevelopersActivity.contains(developerName) || !initialAssignedDevelopers.contains(developerName);   // assert 3
         } else {
         // condit 2
         assert assignedDevelopersActivity.equals(initialAssignedDevelopers);    // assert 4
@@ -133,27 +137,15 @@ public class Activity {
         return assignedDevelopersActivity;
     }
 
-
-    //This should be throwing an error, but I'll handle it in the controller I guess -M
+    //ASGER FORKLAR
     public void logHours(String developerName, int hoursToLog) {
         assert developerName != null;   // assert 1 can comment out/delete if messing with fx
         assert hoursToLog >= 0; // assert 2 can comment out/delete if messing with fx
-
-        /* int tempHours;
-        if (developersLoggedHours.get(developerName) >= 0) {    // 1 
-            tempHours = developersLoggedHours.get(developerName);   // 2
-        } else {
-            tempHours = 0;      // 3
-        } */
-
-        //For the above, just write it like this hombre -M
 
         int tempHours = 0;
         if (developersLoggedHours.get(developerName) > 0) {
             tempHours = developersLoggedHours.get(developerName);
         }
-
-
 
         int oldTotal = loggedBudgetHours;   // can comment out/delete if messing with fx
         int oldDeveloperHours = developersLoggedHours.getOrDefault(developerName, 0); // can comment out/delete if messing with fx
@@ -165,20 +157,22 @@ public class Activity {
         assert loggedBudgetHours == oldTotal + hoursToLog;  // assert 4 can comment out/delete if messing with fx
     }
 
-
-     public void editLoggedHours(String developerName, int hoursToLog) {
+    //ASGER FORKLAR
+    public void editLoggedHours(String developerName, int hoursToLog) {
         developersLoggedHours.put(developerName,hoursToLog);
     }
 
+    //Adds on top of logged hours for activity
     public void logHoursTotal(int hoursToLog) {
         loggedBudgetHours += hoursToLog;
     }
 
+    //Sets the logged hours directly instead of adding on top
     public void setLoggedBudgetHours(int hours) {
     this.loggedBudgetHours = hours;
     }
 
-    //Why did I have to add this? -M
+    //Remaining hours of project for tracking
     public int getRemainingHours() {
         return Math.max(0, budgetHours - loggedBudgetHours);
     }

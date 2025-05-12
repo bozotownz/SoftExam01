@@ -6,14 +6,11 @@ import java.util.ArrayList;
 public class Schedule {
     private static Schedule instance;
     private ArrayList<Project> projects = new ArrayList<>();
-
     private String respondText;
+    //Iterator of projects - change this depending on the csv files loaded.
     private int projectIterator = 1; 
 
-
-    public Schedule() {
-    }
-
+    //Constructs a Schedule as a recurring instance if it doesn't already exist. Singleton state
     public static Schedule getInstance() {
         if (instance == null) {
             instance = new Schedule();
@@ -21,6 +18,7 @@ public class Schedule {
         return instance;
     }
 
+    //
     public void addProject(Project project) {
         projects.add(project);
         changeRespondsText("added", project.getProjectName());

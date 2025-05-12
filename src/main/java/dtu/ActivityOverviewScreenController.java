@@ -1,16 +1,20 @@
 package dtu;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.fxml.FXML;
-import javafx.scene.control.*;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
-
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.HashSet;
 import java.util.Set;
+
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.fxml.FXML;
+import javafx.scene.control.Button;
+import javafx.scene.control.DatePicker;
+import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
+import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 
 public class ActivityOverviewScreenController extends SubpageController {
 
@@ -61,7 +65,6 @@ public class ActivityOverviewScreenController extends SubpageController {
 
     //SHOW ASSIGNED PEOPLE
     //ADD HOUR CONTRIBUTION - SHOULD SUBTRACT HOURS FROM REMAINING ACTIVITY
-
 
     public void setActivityOverviewScreen(Activity activity) {
         this.activity = activity;

@@ -1,12 +1,12 @@
 package dtu;
 
+import java.util.HashSet;
+
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.input.MouseEvent;
-
-import java.util.HashSet;
 
 public class LoginScreenController {
 
@@ -21,7 +21,6 @@ public class LoginScreenController {
     private Button loginButton;
 
     private LoginController loginController = new LoginController();
-
 
     @FXML
     public void initialize() {
@@ -42,11 +41,10 @@ public class LoginScreenController {
     }
 
 
-
+    //Login button on main page, checks if user exists in csv file in order to proceed.
     public void loginButton(MouseEvent click) {
         try {
             if (loginController.validate(passwordField.getText())) {
-                //Need to do it here since scenemanager does not finish constructing until after initLogin has been called, yes this could be fixed but is not really needed.
                 SceneManager sceneManager = SceneManager.getInstance();
                 sceneManager.setCurrentUser(passwordField.getText());
                 sceneManager.initPostLogin();
@@ -59,15 +57,17 @@ public class LoginScreenController {
         }
     }
 
-    //Uber-giga-redundant but it looks slightly neater which makes me happy and that's very important.
+    //A label for the login status
     public void setLoginStatusLabel(String text) {
         loginStatusLabel.setText(text);
     }
 
+    //Pw field not active.
     public void resetPasswordField() {
         passwordField.clear();
     }
 
+    
     public HashSet<String> getAllUsers() {
         return loginController.getUsers();
     }
