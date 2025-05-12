@@ -12,7 +12,7 @@ public class LoginController {
     private final String usersDatabase = "./db/users.csv";
     private String text;
 
-
+    //Niels
     public void loadUsers() {
         //Reads in the csv file containing users into the users hashset
         try (Scanner scanner = new Scanner(new File(usersDatabase))) {
@@ -24,7 +24,7 @@ public class LoginController {
             System.err.println("User database file not found: " + e.getMessage());
         }
     }
-
+    //Mads
     private void processLine(String line) {
         line = line.replace("\"", "");
         String[] parts = line.split(",");        
@@ -38,13 +38,13 @@ public class LoginController {
     public HashSet<String> getUsers() {
         return users;
     }
-
+    //Anton
     //Is logged in check for testing
     public boolean loggedIn() {
         loggedInFlag = false;
         return loggedInFlag;
     }
-
+    //Anton
     //Is this user logged in
     public boolean isUserLoggedIn(String username) {
         if (users.contains(username)) {
@@ -61,14 +61,8 @@ public class LoginController {
     public String getText() {
         return text;
     }
-
+    //Emil
     public boolean validate(String username) {
         return users.contains(username.trim());
     }
-
-
-
-
-
-
 }

@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
+// Asger 
 public class Activity {
     
     private final String activityName;
@@ -19,7 +19,7 @@ public class Activity {
     //How many hours are actually spent on work
     private int loggedBudgetHours = 0;
     
-
+    // Emil
     //Full constructor with all fields
     public Activity(String actName, int budgetHours, LocalDate startDate, LocalDate endDate) {
         if (actName == null || !actName.matches("[a-zA-Z0-9\\s]+")) {
@@ -39,7 +39,7 @@ public class Activity {
         this.startDate = startDate;
         this.endDate = endDate;
     }
-
+    // Mads
     //Partial constructor with only name required
     public Activity(String actName) {
         if (actName == null || !actName.matches("[a-zA-Z0-9\\s]+")) {
@@ -71,28 +71,28 @@ public class Activity {
     public int getTotalHoursLoggedForDeveloper(String developerName) {
         return developersLoggedHours.get(developerName);
     }
-
+    // Asger
     public void setBudgetHours(int hours) {
         if (budgetHours < 0) {
             throw new IllegalArgumentException("Budget hours must be non-negative");
         }
         this.budgetHours = hours;
     }
-
+    // Anton
     public void setStartDate(LocalDate startDate) {
         if (this.endDate != null && startDate != null && startDate.isAfter(this.endDate)) {
             throw new IllegalArgumentException("Start date cannot be after end date");
         }
         this.startDate = startDate;
     }
-
+    // Niels
     public void setEndDate(LocalDate endDate) {
         if (this.startDate != null && endDate != null && endDate.isBefore(this.startDate)) {
             throw new IllegalArgumentException("End date cannot be before start date");
         }
         this.endDate = endDate;
     }
-
+    //  Anton
     //Dev assigned to activity
     public void assignDeveloper(String developerName) {        
         assert developerName != null; // Precondition
@@ -109,9 +109,11 @@ public class Activity {
             assignedDevelopersActivity.size() == originalSize + 1;                      //6
     }
 
-    //Dev removed from activity //ASGER FORKLAR og check
+    // Emil
+    //Dev removed from activity 
     public void removeDeveloper(String developerName) {
-        /* //pre
+        // follwing code does not run with javafx. it does, however, work with tests.
+        /* 
         assert developerName != null;       // assert 1
         List<String> initialAssignedDevelopers = new  ArrayList<>(assignedDevelopersActivity);  // assert 2
 
@@ -125,8 +127,8 @@ public class Activity {
         assert assignedDevelopersActivity.equals(initialAssignedDevelopers);    // assert 4
         }
         */
-        // previous code if it messes with you
-        
+
+        // Working code for javafx
         if (assignedDevelopersActivity.contains(developerName)) {   // 1
             assignedDevelopersActivity.remove(developerName);   // 2
         }
@@ -137,41 +139,43 @@ public class Activity {
         return assignedDevelopersActivity;
     }
 
-    //ASGER FORKLAR
+    //Asger 
+    //logs hours of a developer to an activity.
     public void logHours(String developerName, int hoursToLog) {
         assert developerName != null;   // assert 1 can comment out/delete if messing with fx
         assert hoursToLog >= 0; // assert 2 can comment out/delete if messing with fx
-
+        // set temphours to be 0 in case the if statement retuns anything other than a positive integer
         int tempHours = 0;
         if (developersLoggedHours.get(developerName) > 0) {
             tempHours = developersLoggedHours.get(developerName);
         }
-
-        int oldTotal = loggedBudgetHours;   // can comment out/delete if messing with fx
-        int oldDeveloperHours = developersLoggedHours.getOrDefault(developerName, 0); // can comment out/delete if messing with fx
-        
+        // DbC for assert later
+        int oldTotal = loggedBudgetHours;   
+        int oldDeveloperHours = developersLoggedHours.getOrDefault(developerName, 0); 
+        //log hours for developer
         developersLoggedHours.put(developerName, tempHours + hoursToLog);   // 4
+        //increment total logged hours for project
         logHoursTotal(hoursToLog);      // 5
 
-        assert developersLoggedHours.get(developerName) == oldDeveloperHours + hoursToLog;  // assert 3 can comment out/delete if messing with fx
-        assert loggedBudgetHours == oldTotal + hoursToLog;  // assert 4 can comment out/delete if messing with fx
+        assert developersLoggedHours.get(developerName) == oldDeveloperHours + hoursToLog;  // assert 3 
+        assert loggedBudgetHours == oldTotal + hoursToLog;  // assert 4 
     }
-
-    //ASGER FORKLAR
+    // Niels
+    // Changes the logged hours for a developer
     public void editLoggedHours(String developerName, int hoursToLog) {
         developersLoggedHours.put(developerName,hoursToLog);
     }
-
+    //niels
     //Adds on top of logged hours for activity
     public void logHoursTotal(int hoursToLog) {
         loggedBudgetHours += hoursToLog;
     }
-
+    //mads
     //Sets the logged hours directly instead of adding on top
     public void setLoggedBudgetHours(int hours) {
     this.loggedBudgetHours = hours;
     }
-
+    //mads
     //Remaining hours of project for tracking
     public int getRemainingHours() {
         return Math.max(0, budgetHours - loggedBudgetHours);

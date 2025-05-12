@@ -3,7 +3,7 @@ package dtu;
 import java.time.Year;
 import java.util.ArrayList;
 
-public class Schedule {
+public class Schedule {//Niels
     private static Schedule instance;
     private ArrayList<Project> projects = new ArrayList<>();
     private String respondText;
@@ -17,7 +17,7 @@ public class Schedule {
         }
         return instance;
     }
-
+    //Niels
     //Adds project to the list of projects in the schedule
     public void addProject(Project project) {
         projects.add(project);
@@ -27,12 +27,12 @@ public class Schedule {
     public int getProjectIterator() {
     return projectIterator;
     }
-
+    //Asger
     //Sets the project iterator
     public void setProjectIterator(int projectIterator) {
     this.projectIterator = projectIterator;
     }
-
+    //Niels
     //Creates a project
     public Project createProject(String projectName) {
         int projectID = (Year.now().getValue()-2000)*1000 + projectIterator;
@@ -48,7 +48,7 @@ public class Schedule {
     public ArrayList<Project> getProjects() {
         return projects;
     }
-
+    //Emil
     //Does a project exist with this name, inside the list of projects
     public boolean projectExistsName(String string) {
         for (int i = 0; i < projects.size(); i++) {
@@ -58,7 +58,7 @@ public class Schedule {
         }
         return false;
     }
-
+    //Mads
     //Does a project exist with this ID, inside the list of projects
     public boolean projectExistsID(int projectID) {
         assert projectID >= 0;
@@ -71,7 +71,7 @@ public class Schedule {
         }
         return false;                                           //4
     }
-
+    //Asger
     //Returns the project if found
     public Project findProjectByID(int projectID) {
         for (int i = 0; i < projects.size(); i++) {
@@ -81,7 +81,7 @@ public class Schedule {
         }
         throw new IllegalArgumentException("Project with ID '" + projectID + "' not found");     
     }
-
+    // Emil
     //Returns project by name if found
     public Project findProjectByName(String string) {
         for (int i = 0; i < projects.size(); i++) {
@@ -91,7 +91,7 @@ public class Schedule {
         }
         throw new IllegalArgumentException("Project with name '" + string + "' not found");
     }
-        
+    //Niels
     //Delete the project by name
     public boolean removeProject(String removedProject) {
         for (int i = 0; i < projects.size(); i++) {
@@ -103,7 +103,7 @@ public class Schedule {
         }
         return false;
     }
-
+    //Anton
     //Delete the specific project from the project list
     public boolean deleteProjectByRef(Project project) {
         if (project != null) {
@@ -112,7 +112,7 @@ public class Schedule {
         }
         return false;
     }
-
+    //Mads
     //You added/removed a project: (the given projectName)
     public void changeRespondsText(String string, String projectName) {
         
@@ -122,7 +122,7 @@ public class Schedule {
     public String getRespondText() {
         return respondText;
     }
-
+    //Asger
     //Reset for the projectIterator (when year changes)
     public void reset() {
         projects.clear();

@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Project {
+public class Project { // Emil
     private int projectID;
     private String projectName;
     private ArrayList<Activity> activities =  new ArrayList<>();
@@ -28,6 +28,7 @@ public class Project {
         return projectLeaderName;
     }
 
+    // Niels
     //Set project lead with check for correct input
     public void setProjectLeader(String projectLeaderName) {
         if (projectLeaderName != null && !projectLeaderName.matches("[a-zA-Z]+")) {
@@ -48,7 +49,7 @@ public class Project {
         return activities;
     }
 
-    //Asger FIX - gør kommentering pæn
+    // Asger
     public Map<String, Integer> getDeveloperActivityLoadForInterval(LocalDate searchStartDate, LocalDate searchEndDate) {
         developerActivityHashmap = new HashMap<>();
         
@@ -58,19 +59,22 @@ public class Project {
             if (activity.getStartDate().isAfter(searchEndDate) || activity.getEndDate().isBefore(searchEndDate)) {
                 continue;
             }
-            // add developers to hashmap
+            // add developers to hashmap.
             for (String developer : activity.getDevelopersAssignedToActivity()) {
                 int count = 0;
+                //if developer exists set his current count
                 if (developerActivityHashmap.containsKey(developer)) {
                     count = developerActivityHashmap.get(developer);
                 }
+                //iterate count
                 count++;
+                //set new count in
                 developerActivityHashmap.put(developer, count);
             }
         }
         return developerActivityHashmap;
     }
-    
+    //Niels
     //Returns an activity based off the name
     public Activity findActivityByName(String activityName) {
         assert activityName != null;                    //assert 1
@@ -85,7 +89,7 @@ public class Project {
         assert true;                                    //assert 3  4    
         return null;                                    //4
     }
-
+    // Anton
     //Returns logged hours
     public int getTotalProjectHours() {
         int hourCount = 0;
@@ -94,7 +98,7 @@ public class Project {
         }
         return hourCount;
     }
-
+    // Mads
     //Returns budgetted (planned) hours
     public int getBudgetProjectHours() {
         int hourCount = 0;
@@ -103,7 +107,7 @@ public class Project {
         }
         return hourCount;
     }
-
+    // Mads
     //Returns remaining hours on a project
     public int getRemainingHours() {
         int remainingHours = (getBudgetProjectHours() - getTotalProjectHours());
