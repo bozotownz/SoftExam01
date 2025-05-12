@@ -11,16 +11,19 @@ import java.time.format.DateTimeFormatter;
 public class ActivityOverviewScreenController extends SubpageController {
 
     private Activity activity; //GET THIS FROM THE CLICKED ACTIVITY TILE
+    private Project originProject; //REFERENCE TO SEND YOU BACK TO PROJ OVERVIEW IF NEEDED
+    private boolean hasOriginProject;
 
     @FXML
     private Label activityNameLabel, timeSpanLabel;
 
     @FXML
-    private Button showAssignedDevelopersButton;
+    private Button showAssignedDevelopersButton, cancelButton;
 
     @FXML
     public void initialize() {
         showAssignedDevelopersButton.setOnMouseClicked(this::getAssignedDevelopers);
+        cancelButton.setOnMouseClicked(this::cancelButton);
     }
 
     //SHOW ASSIGNED PEOPLE
@@ -41,6 +44,13 @@ public class ActivityOverviewScreenController extends SubpageController {
         timeSpanLabel.setText(formatDateRange(activity.getStartDate(), activity.getEndDate()));
     }
 
+    //Overloaded method because originProject is not always set.
+    public void setActivityOverviewScreen(Activity activity, Project originProject) {
+        setActivityOverviewScreen(activity);
+        this.originProject = originProject;
+        hasOriginProject = true;
+    }
+
 
     public String formatDateRange(LocalDate startDate, LocalDate endDate) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
@@ -51,6 +61,14 @@ public class ActivityOverviewScreenController extends SubpageController {
     public void getAssignedDevelopers(MouseEvent click) {
         for (String user : activity.getDevelopersAssignedToActivity()) {
             System.out.println(user);
+        }
+    }
+
+    public void cancelButton(MouseEvent click) {
+        if (hasOriginProject) {
+            mainScreenController.swapToProjectOverviewScreen(originProject);
+        } else {
+            mainScreenController.swapToMyActivitiesScreen(click);
         }
     }
 }

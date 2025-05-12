@@ -17,6 +17,9 @@ public class ActivityTileView {
 
     private Activity activity;
 
+    private Project originProject;
+    private boolean hasOriginProject = false;
+
     @FXML
     public void initialize() {
 
@@ -30,8 +33,19 @@ public class ActivityTileView {
         activityTilePane.setOnMouseClicked(this::openActivityOverviewScreen);
     }
 
-    public void openActivityOverviewScreen(MouseEvent click) {
-        subpageController.mainScreenController.swapToActivityOverviewScreen(activity);
+    public void setOriginProject(Project originProject) {
+        this.originProject = originProject;
+        hasOriginProject = true;
     }
+
+    //This is such a bad way of doing it. The proper way is to use a stack and simply pop it to return to the previous screen.
+    public void openActivityOverviewScreen(MouseEvent click) {
+        if (hasOriginProject) {
+            subpageController.mainScreenController.swapToActivityOverviewScreenFromProject(activity, originProject);
+        } else {
+            subpageController.mainScreenController.swapToActivityOverviewScreen(activity);
+        }
+    }
+
 
 }

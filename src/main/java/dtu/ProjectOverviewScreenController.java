@@ -81,6 +81,7 @@ public class ProjectOverviewScreenController extends SubpageController {
             Parent tile = tileLoader.load();
             ActivityTileView activityTileView = tileLoader.getController();
             activityTileView.setupTile(activity, this);
+            activityTileView.setOriginProject(project);
             projActivitiesPane.getChildren().add(tile);
 
         } catch (Exception e) {
@@ -88,6 +89,10 @@ public class ProjectOverviewScreenController extends SubpageController {
             System.err.println("Attempted to load empty activity or failed to load activity data. This would probably happen given the awful structure of the data necessitating awful code.");
         }
 
+    }
+
+    public Project getProject() {
+        return project;
     }
 
 }
