@@ -190,18 +190,18 @@ public class ProjectOverviewScreenController extends SubpageController {
 
     private void resetComboBoxItems(String selectedLeader) {
         ObservableList<String> newItems = FXCollections.observableArrayList();
-        newItems.add(none); // Always at the top
+        newItems.add(none); 
 
-        // Add all users except the currently selected leader (if any)
+
         for (String user : allUsersList) {
             if (!user.equals(selectedLeader)) {
                 newItems.add(user);
             }
         }
 
-        // If a leader is selected, add them back for display
+
         if (selectedLeader != null) {
-            newItems.add(1, selectedLeader); // Keep leader near top
+            newItems.add(1, selectedLeader);
         }
 
         selectProjectManagerField.setItems(newItems);
