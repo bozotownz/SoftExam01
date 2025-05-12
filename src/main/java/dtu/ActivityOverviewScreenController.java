@@ -73,6 +73,9 @@ public class ActivityOverviewScreenController extends SubpageController {
         if (!activity.getDevelopersAssignedToActivity().contains(SceneManager.getInstance().getCurrentUser())) {
             logHoursButton.setDisable(true);
             logHoursField.setDisable(true);
+        } else {
+            logHoursButton.setDisable(false);
+            logHoursField.setDisable(false);
         }
     }
 
