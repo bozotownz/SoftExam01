@@ -30,6 +30,9 @@ public class ActivityTileView {
         this.subpageController = subpageController;
         activityNameLabel.setText(activity.getName());
         assignedHrsLabel.setText(activity.getBudgetHours() + " Hrs");
+        if (activity.getRemainingHours() == 0) {
+            activityTilePane.setOpacity(0.7);
+        }
         activityTilePane.setOnMouseClicked(this::openActivityOverviewScreen);
     }
 
