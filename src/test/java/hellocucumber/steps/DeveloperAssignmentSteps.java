@@ -18,8 +18,8 @@ public class DeveloperAssignmentSteps {
     private Schedule schedule = Schedule.getInstance();
     private Project project; //also redundant
     private LoginController loginController = new LoginController(); //redundant
-    private String projectLeaderName;
     private ArrayList<Activity> activities;
+    private String projectLeaderName;
     private int projectID;
     private Activity activityMain;
     private String developerName;
@@ -27,7 +27,7 @@ public class DeveloperAssignmentSteps {
 
         
     @Given("I {string} logged in as a project leader for project {int}")
-    public void iLoggedInAsAProjectLeaderForProject(String projectLeader, Integer projectID) {
+    public void iLoggedInAsAProjectLeaderForProject(String projectLeader, int projectID) {
         this.projectLeaderName = projectLeader;
         this.projectID = projectID;
         assertEquals(projectLeaderName, schedule.findProjectByID(projectID).getProjectLeader());
@@ -36,8 +36,7 @@ public class DeveloperAssignmentSteps {
     @When("I assign developer {string} to activity {string}")
     public void iAssignDeveloperToActivity(String developerName, String activityName) {
         this.developerName = developerName;
-        activities = schedule.findProjectByID(projectID).getActivities();
-        // should 100% make a method for this. 
+        activities = schedule.findProjectByID(25001).getActivities();
         for (Activity a : activities) {
             if (a.getName().equals(activityName)) {
                 activityMain = a;

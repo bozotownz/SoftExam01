@@ -19,9 +19,9 @@ public class ReportingSteps {
     private Activity activity;
     private Map<String, Integer> reportOfHours = new HashMap<>();
     
-    @Given("project {string} has recorded hours")
-    public void projectHasRecordedHours(String projectName) {
-        project = schedule.findProjectByName(projectName);
+    @Given("project {int} has recorded hours")
+    public void projectHasRecordedHours(int projectID) {
+        project = schedule.findProjectByID(projectID);
         assertTrue(project.getTotalProjectHours() > 0);
     }
 

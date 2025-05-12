@@ -20,6 +20,6 @@ Background:
 
 Scenario: Generate report
     Given I am logged in as a project leader "huba"
-    And project "25001" has recorded hours
+    And project 25001 has recorded hours
     When I generate a report
     Then it lists all hours spent

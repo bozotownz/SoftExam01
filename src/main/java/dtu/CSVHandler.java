@@ -8,25 +8,26 @@ import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
 
+
 public class CSVHandler {
-    
+
     //Method for loading from the files in the db folder - Split into different files like this to avoid 2d arrays saved to csv files
     public static Schedule loadScheduleFromCSV() throws IOException {
         Schedule schedule = Schedule.getInstance();
 
-        // Load metadata
+        //Load configuration
         loadConfig(schedule);
         
-        // Load projects and build map
+        //Load projects and build map
         Map<Integer, Project> projectMap = loadProjects(schedule);
         
-        // Load activities
+        //Load activities
         loadActivities(projectMap);
         
-        // Load developer assignments
+        //Load developer assignments
         loadDeveloperAssignments(projectMap);
         
-        // Load developer hours
+        //Load developer hours
         loadDeveloperHours(projectMap);
         
         return schedule;
@@ -99,7 +100,7 @@ public class CSVHandler {
         }
     }
     
-
+    //Load developers assigned to activities
     private static void loadDeveloperAssignments(Map<Integer, Project> projectMap) throws IOException {
         File assignmentsFile = new File("./db/developer_assignments.csv");
         
@@ -125,6 +126,7 @@ public class CSVHandler {
         }
     }
 
+    //Loads hours that devs have assigned to the activities
     private static void loadDeveloperHours(Map<Integer, Project> projectMap) throws IOException {
         File hoursFile = new File("./db/dev_hours_log.csv");
         
