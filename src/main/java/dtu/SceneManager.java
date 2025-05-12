@@ -5,6 +5,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.HashSet;
 
 public class SceneManager {
 
@@ -19,11 +20,14 @@ public class SceneManager {
 
     private MainScreenController mainScreenController;
 
+    private HashSet<String> allUsers;
+
     private String currentUser = "None";
 
     private SceneManager(Stage stage) {
         this.stage = stage;
         initLoginScreen();
+        setAllUsers(loginScreenController.getAllUsers());
     }
 
     protected void initPostLogin() {
@@ -94,6 +98,14 @@ public class SceneManager {
 
     public String getCurrentUser() {
         return currentUser;
+    }
+
+    public HashSet<String> getAllUsers() {
+        return allUsers;
+    }
+
+    private void setAllUsers(HashSet<String> users) {
+        allUsers = users;
     }
 
 }

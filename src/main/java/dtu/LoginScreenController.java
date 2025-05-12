@@ -6,6 +6,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.input.MouseEvent;
 
+import java.util.HashSet;
+
 public class LoginScreenController {
 
 
@@ -25,7 +27,6 @@ public class LoginScreenController {
     public void initialize() {
         loginButton.setOnMouseClicked(this::loginButton);
         loginController.loadUsers();
-        
         loadScheduleData();
     }
     
@@ -67,7 +68,9 @@ public class LoginScreenController {
         passwordField.clear();
     }
 
-
+    public HashSet<String> getAllUsers() {
+        return loginController.getUsers();
+    }
 
 
    

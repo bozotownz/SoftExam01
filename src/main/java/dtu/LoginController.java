@@ -69,7 +69,7 @@ public class LoginController {
     }
 
     
-
+    //Went unused.
     public boolean createUser(String username) throws Exception {
         username = username.trim();
         if (users.contains(username)) {
