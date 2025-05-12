@@ -48,6 +48,7 @@ public class CreateActivityScreenController extends SubpageController {
         updateDevsLists();
         setupAddRemoveOnClick();
         restrictTimeBudgetField();
+        restrictDatePicker();
     }
 
 
@@ -133,6 +134,61 @@ public class CreateActivityScreenController extends SubpageController {
 
     private LocalDate getEndDate() {
         return endDateField.getValue();
+    }
+
+    private void restrictDatePicker() {
+        //Adds two listeners that update the dayCell items and disable them whenever the value of the opposing datePicker field is updated.
+        //TLDR; When startDate is updated, endDate is restricted and vice-versa.
+
+
+        startDateField.valueProperty().addListener((observable, oldValue, newValue) -> {
+            //If value isnt empty
+            if (newValue != null) {
+                //Value change
+                endDateField.setValue(endDateField.getValue() != null && endDateField.getValue().isBefore(newValue)
+                        ? newValue
+                        : endDateField.getValue());
+
+                //Overrides the factory method for the dayCells
+                endDateField.setDayCellFactory(picker -> new javafx.scene.control.DateCell() {
+                    @Override
+                    public void updateItem(LocalDate item, boolean empty) {
+                        super.updateItem(item, empty);
+                        //If our dayCell is before the updated newValue, disable it.
+                        if (item != null && item.isBefore(newValue)) {
+                            setDisable(true);
+                            setStyle("-fx-background-color: #ffcccc;");
+                        } else {
+                            setDisable(false);
+                            setStyle("");
+                        }
+                    }
+                });
+            }
+        });
+
+        //Same as above but inverted.
+        endDateField.valueProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+                startDateField.setValue(startDateField.getValue() != null && startDateField.getValue().isAfter(newValue)
+                        ? newValue
+                        : startDateField.getValue());
+                startDateField.setDayCellFactory(picker -> new javafx.scene.control.DateCell() {
+                    @Override
+                    public void updateItem(LocalDate item, boolean empty) {
+                        super.updateItem(item, empty);
+                        //Here it is obviously after, rather than before.
+                        if (item != null && item.isAfter(newValue)) {
+                            setDisable(true);
+                            setStyle("-fx-background-color: #ffcccc;");
+                        } else {
+                            setDisable(false);
+                            setStyle("");
+                        }
+                    }
+                });
+            }
+        });
     }
 
 }

@@ -11,6 +11,7 @@ import javafx.scene.input.MouseEvent;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class CreateProjectScreenController extends SubpageController {
 
@@ -18,13 +19,19 @@ public class CreateProjectScreenController extends SubpageController {
     private TextField projectNameField;
 
     @FXML
-    private ComboBox selectProjectManagerField;
+    private ComboBox<String> selectProjectManagerField;
 
     @FXML
     private Button createProjectButton, cancelButton;
 
     @FXML
     private Label errorMessageLabel;
+
+    private final List<String> allUsersList = new ArrayList<>();
+
+    private ObservableList<String> assignableUsersList;
+
+    private String currentLeader = null;
 
 
 
@@ -33,7 +40,8 @@ public class CreateProjectScreenController extends SubpageController {
         createProjectButton.setOnMouseClicked(this::createProjectButton);
         cancelButton.setOnMouseClicked(this::cancelButton);
 
-        constructUsersList();
+        setupUsersList();
+        setupLeaderSelection();
     }
 
     public void createProjectButton(MouseEvent click) {
@@ -49,6 +57,9 @@ public class CreateProjectScreenController extends SubpageController {
             try {
                 Schedule currentSchedule = Schedule.getInstance();
                 Project newProj = currentSchedule.createProject(projectNameField.getText()); //Need the ref to construct the tile without reload of db.
+                if (currentLeader != null) {
+                    newProj.setProjectLeader(selectProjectManagerField.getValue());
+                }
                 currentSchedule.addProject(newProj);
                 //ADD THE PROJECT TILE TO THE PROJECT SCREEN
                 mainScreenController.allProjectsScreenController.addNewProjectTile(newProj);
@@ -65,18 +76,32 @@ public class CreateProjectScreenController extends SubpageController {
         mainScreenController.swapToAllProjectsScreen(click);
     }
 
-    public void something() {
 
+    public void setupUsersList() {
+        allUsersList.addAll(SceneManager.getInstance().getAllUsers());
+        assignableUsersList = FXCollections.observableArrayList(allUsersList);
+        selectProjectManagerField.setValue(null);
+        selectProjectManagerField.setItems(assignableUsersList);
     }
 
-    public void constructUsersList() {
-        //Construct a list of users
+    public void setupLeaderSelection() {
+        selectProjectManagerField.setOnAction(event -> {
+            String newLeader = selectProjectManagerField.getValue();
 
+            // Skip if same as before or null
+            if (newLeader == null || newLeader.equals(currentLeader)) return;
 
-        List<String> userList = new ArrayList<>();
-        userList.add("test1");
-        userList.add("test2");
-        selectProjectManagerField.setItems(FXCollections.observableArrayList(userList));
+            currentLeader = newLeader;
+
+            // Rebuild list: show all users except the selected one
+            List<String> updatedList = allUsersList.stream()
+                    .filter(user -> !user.equals(currentLeader))
+                    .collect(Collectors.toList());
+
+            selectProjectManagerField.setItems(FXCollections.observableArrayList(updatedList));
+            selectProjectManagerField.getItems().add(0, currentLeader); // keep selected at top
+            selectProjectManagerField.setValue(currentLeader);
+        });
     }
 
 

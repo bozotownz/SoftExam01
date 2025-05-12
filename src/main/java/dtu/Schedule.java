@@ -35,7 +35,7 @@ public class Schedule {
     }
 
     //Given the current use of this, why does it even return a project rather than just try to add it?
-    public Project createProject(String projectName) {
+    public Project createProjectOld(String projectName) {
         //Udkommentér denne til test - projectname bliver ikke carried over korrekt via features
         /* if (!projectName.matches("[a-zA-Z0-9\\\\s]+")) {
             throw new IllegalArgumentException("Project name must contain only letters, numbers and spaces");
@@ -45,7 +45,24 @@ public class Schedule {
         Project project = new Project(projectName, projectID);
         //addProject(project);
         return project;
-    }   
+    }
+
+    //Fix for projectIterator not being updated, old method is above if needed -M
+    public Project createProject(String projectName) {
+        //Udkommentér denne til test - projectname bliver ikke carried over korrekt via features
+        /* if (!projectName.matches("[a-zA-Z0-9\\\\s]+")) {
+            throw new IllegalArgumentException("Project name must contain only letters, numbers and spaces");
+        } */
+        int projectID = (Year.now().getValue()-2000)*1000 + projectIterator;
+        projectIterator++;
+        while(projectExistsID(projectID)) {
+            projectID++;
+            projectIterator++;
+        }
+        Project project = new Project(projectName, projectID);
+        //addProject(project);
+        return project;
+    }
 
     public ArrayList<Project> getProjects() {
         return projects;
@@ -97,6 +114,14 @@ public class Schedule {
                 changeRespondsText("removed", removedProject);
                 return true;
             }
+        }
+        return false;
+    }
+
+    public boolean deleteProjectByRef(Project project) {
+        if (project != null) {
+            projects.remove(project);
+            return true;
         }
         return false;
     }
