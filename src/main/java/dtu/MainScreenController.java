@@ -125,16 +125,6 @@ public class MainScreenController {
         setCurrentSubScreenLabel("Creating New Project");
     }
 
-    public void swapToMyActivitiesScreen(MouseEvent click) {
-        loadSubScreen("MyActivitiesScreen.fxml");
-        setCurrentSubScreenLabel("My Activities");
-    }
-
-    public void swapToCreateActivityScreen() {
-        loadSubScreen("CreateActivityScreen.fxml");
-        setCurrentSubScreenLabel("Creating New Activity");
-    }
-
     public void swapToProjectOverviewScreen(Project project) {
         try {
             FXMLLoader projOverviewLoader = new FXMLLoader(getClass().getResource("ProjectOverviewScreen.fxml"));
@@ -142,10 +132,28 @@ public class MainScreenController {
             ProjectOverviewScreenController projectOverviewScreenController = projOverviewLoader.getController();
             projectOverviewScreenController.setProjOverviewScreen(project);
             insertSubScreen(root, projectOverviewScreenController);
+            setCurrentSubScreenLabel("Project Overview");
         } catch (Exception e) {
             e.printStackTrace();
         }
-        setCurrentSubScreenLabel("Project Overview");
+    }
+
+    public void swapToMyActivitiesScreen(MouseEvent click) {
+        loadSubScreen("MyActivitiesScreen.fxml");
+        setCurrentSubScreenLabel("My Activities");
+    }
+
+    public void swapToCreateActivityScreen(Project originProject) {
+        try {
+            FXMLLoader createActivityScreenLoader = new FXMLLoader(getClass().getResource("CreateActivityScreen.fxml"));
+            Parent root = createActivityScreenLoader.load();
+            CreateActivityScreenController createActivityScreenController = createActivityScreenLoader.getController();
+            createActivityScreenController.setOriginProject(originProject);
+            insertSubScreen(root, createActivityScreenController);
+            setCurrentSubScreenLabel("Creating New Activity");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void swapToActivityOverviewScreen(Activity activity) {
@@ -155,12 +163,13 @@ public class MainScreenController {
             ActivityOverviewScreenController activityOverviewScreenController = activityOverviewLoader.getController();
             activityOverviewScreenController.setActivityOverviewScreen(activity);
             insertSubScreen(root, activityOverviewScreenController);
-
+            setCurrentSubScreenLabel("Activity Overview");
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
+    //This could've been overloaded, but I think the difference in method sigs clarifies the use case.
     public void swapToActivityOverviewScreenFromProject(Activity activity, Project project) {
         try {
             FXMLLoader activityOverviewLoader = new FXMLLoader(getClass().getResource("ActivityOverviewScreen.fxml"));
@@ -168,7 +177,7 @@ public class MainScreenController {
             ActivityOverviewScreenController activityOverviewScreenController = activityOverviewLoader.getController();
             activityOverviewScreenController.setActivityOverviewScreen(activity, project);
             insertSubScreen(root, activityOverviewScreenController);
-
+            setCurrentSubScreenLabel("Activity Overview");
         } catch (IOException e) {
             e.printStackTrace();
         }

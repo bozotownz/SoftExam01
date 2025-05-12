@@ -44,7 +44,7 @@ public class ProjectOverviewScreenController extends SubpageController {
     }
 
     public void createNewActivityButton(MouseEvent click) {
-        mainScreenController.swapToCreateActivityScreen();
+        mainScreenController.swapToCreateActivityScreen(project);
     }
 
     public void updateTimeBudgetLabel() {
