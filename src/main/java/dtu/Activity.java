@@ -134,6 +134,8 @@ public class Activity {
         return assignedDevelopersActivity;
     }
 
+
+    //This should be throwing an error, but I'll handle it in the controller I guess -M
     public void logHours(String developerName, int hoursToLog) {
         assert developerName != null;   // assert 1 can comment out/delete if messing with fx
         assert hoursToLog >= 0; // assert 2 can comment out/delete if messing with fx

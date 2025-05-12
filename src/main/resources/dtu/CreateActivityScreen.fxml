@@ -54,7 +54,7 @@
                               <Font size="14.0" />
                            </font>
                         </Label>
-                        <DatePicker fx:id="startDateField" />
+                        <DatePicker fx:id="startDateField" editable="false" />
                      </children>
                   </VBox>
                   <VBox alignment="CENTER" prefHeight="150.0" prefWidth="250.0">
@@ -64,7 +64,7 @@
                               <Font size="14.0" />
                            </font>
                         </Label>
-                        <DatePicker fx:id="endDateField" />
+                        <DatePicker fx:id="endDateField" editable="false" />
                      </children>
                   </VBox>
                </children>

@@ -1,47 +1,78 @@
 package dtu;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
+import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.HashSet;
+import java.util.Set;
 
 public class ActivityOverviewScreenController extends SubpageController {
 
     private Activity activity; //GET THIS FROM THE CLICKED ACTIVITY TILE
     private Project originProject; //REFERENCE TO SEND YOU BACK TO PROJ OVERVIEW IF NEEDED
     private boolean hasOriginProject;
+    private Set<String> allDevs;
 
     @FXML
-    private Label activityNameLabel, timeSpanLabel;
+    private Label activityNameLabel, timeSpanLabel, remainingHoursLabel, timeBudgetErrorLabel, activityNameErrorLabel;
 
     @FXML
-    private Button showAssignedDevelopersButton, cancelButton;
+    private AnchorPane viewActivityPane, editActivityPane;
+
+    @FXML
+    private ListView<String> assignedDevsListView, editAssignedDevsListView, editUnassignedDevsListView;
+    private final ObservableList<String> assignedDevsList = FXCollections.observableArrayList();
+    private final ObservableList<String> assignedDevs = FXCollections.observableArrayList(), unassignedDevs = FXCollections.observableArrayList();
+
+    @FXML
+    private TextField logHoursField, activityNameField, timeBudgetField;
+
+    @FXML
+    private DatePicker startDateField, endDateField;
+
+    @FXML
+    private Button logHoursButton, cancelButton, editActivityButton, cancelEditButton, saveChangesButton, deleteActivityButton;
 
     @FXML
     public void initialize() {
-        showAssignedDevelopersButton.setOnMouseClicked(this::getAssignedDevelopers);
+
         cancelButton.setOnMouseClicked(this::cancelButton);
+        cancelEditButton.setOnMouseClicked(this::cancelEditButton);
+        logHoursButton.setOnMouseClicked(this::submitHoursLogged);
+        editActivityButton.setOnMouseClicked(this::editActivityButton);
+        saveChangesButton.setOnMouseClicked(this::saveChangesButton);
+        deleteActivityButton.setOnMouseClicked(this::deleteActivityButton);
+        setupAddRemoveOnClick();
+        restrictLogHoursField();
+        restrictTimeBudgetField();
+
+        assignedDevsListView.setItems(assignedDevsList);
+        editAssignedDevsListView.setItems(assignedDevs);
+        editUnassignedDevsListView.setItems(unassignedDevs);
+        allDevs = SceneManager.getInstance().getAllUsers();
     }
 
     //SHOW ASSIGNED PEOPLE
     //ADD HOUR CONTRIBUTION - SHOULD SUBTRACT HOURS FROM REMAINING ACTIVITY
 
 
-    public void addDeveloper() {
-        //Get selected developer(Most likely dropdown combobox)
-
-        String developer = "placeholder";
-
-        activity.assignDeveloper(developer);
-    }
-
     public void setActivityOverviewScreen(Activity activity) {
         this.activity = activity;
+
         activityNameLabel.setText(activity.getName());
         timeSpanLabel.setText(formatDateRange(activity.getStartDate(), activity.getEndDate()));
+        remainingHoursLabel.setText(Integer.toString(activity.getBudgetHours()));
+        updateAssignedDevsListOverview();
+        if (!activity.getDevelopersAssignedToActivity().contains(SceneManager.getInstance().getCurrentUser())) {
+            logHoursButton.setDisable(true);
+            logHoursField.setDisable(true);
+        }
     }
 
     //Overloaded method because originProject is not always set.
@@ -58,11 +89,7 @@ public class ActivityOverviewScreenController extends SubpageController {
     }
 
 
-    public void getAssignedDevelopers(MouseEvent click) {
-        for (String user : activity.getDevelopersAssignedToActivity()) {
-            System.out.println(user);
-        }
-    }
+
 
     public void cancelButton(MouseEvent click) {
         if (hasOriginProject) {
@@ -71,4 +98,125 @@ public class ActivityOverviewScreenController extends SubpageController {
             mainScreenController.swapToMyActivitiesScreen(click);
         }
     }
+
+    public void editActivityButton(MouseEvent click) {
+        togglePage();
+        setupEditPage();
+    }
+
+    public void cancelEditButton(MouseEvent click) {
+        togglePage();
+    }
+
+    public void saveChangesButton(MouseEvent click) {
+        activity.setBudgetHours(Integer.parseInt(timeBudgetField.getText()));
+
+        activity.setStartDate(startDateField.getValue());
+        activity.setEndDate(endDateField.getValue());
+
+        activity.getDevelopersAssignedToActivity().removeAll(unassignedDevs);
+
+        for (String addedDev : assignedDevs) {
+            if (!activity.getDevelopersAssignedToActivity().contains(addedDev)) {
+                activity.assignDeveloper(addedDev);
+            }
+        }
+
+        setActivityOverviewScreen(activity);
+        togglePage();
+    }
+
+    public void deleteActivityButton(MouseEvent click) {
+        if (hasOriginProject) {
+            originProject.getActivities().remove(activity);
+        } else {
+            for (Project proj : Schedule.getInstance().getProjects()) {
+                proj.getActivities().remove(activity);
+            }
+        }
+        mainScreenController.swapToProjectOverviewScreen(originProject);
+    }
+
+    private void togglePage() {
+        //Inverts the boolean return value of the pane state and toggles.
+
+        viewActivityPane.setDisable(!viewActivityPane.isDisable());
+        viewActivityPane.setVisible(!viewActivityPane.isVisible());
+
+        editActivityPane.setDisable(!editActivityPane.isDisable());
+        editActivityPane.setVisible(!editActivityPane.isVisible());
+    }
+
+    private void restrictLogHoursField() {
+        logHoursField.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue.matches("[0-9]*\\.?[0-9]*")) {
+                logHoursField.setText(oldValue);
+            }
+        });
+    }
+
+    private void restrictTimeBudgetField() {
+        timeBudgetField.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue.matches("[0-9]*\\.?[0-9]*")) {
+                timeBudgetField.setText(oldValue);
+            }
+        });
+    }
+
+    private void submitHoursLogged(MouseEvent click) {
+        int hoursToLog = Integer.parseInt(logHoursField.getText());
+        if (hoursToLog == 0) {
+
+        } else if (hoursToLog > activity.getBudgetHours()) {
+
+        } else {
+            activity.logHours(SceneManager.getInstance().getCurrentUser(), hoursToLog);
+        }
+    }
+
+    private void updateAssignedDevsListOverview() {
+        assignedDevsList.setAll(activity.getDevelopersAssignedToActivity());
+    }
+
+    private void setupEditPage() {
+        activityNameField.setText(activity.getName());
+        timeBudgetField.setText(Integer.toString(activity.getBudgetHours()));
+        startDateField.setValue(activity.getStartDate());
+        endDateField.setValue(activity.getEndDate());
+
+        assignedDevs.setAll(activity.getDevelopersAssignedToActivity());
+        unassignedDevs.setAll(allDevs);
+        unassignedDevs.removeAll(assignedDevs);
+    }
+
+    private void updateDevsLists() {
+        //Make a copied set of all the devs and remove the ones that are assigned. This gives us a list of the ones that are unassigned.
+        Set<String> unassignedSet = new HashSet<>(allDevs);
+        assignedDevs.forEach(unassignedSet::remove); //This is faster than removeAll because... Java?
+
+        unassignedDevs.setAll(unassignedSet);
+    }
+
+    private void setupAddRemoveOnClick() {
+        editUnassignedDevsListView.setOnMouseClicked(event -> {
+            String selected = editUnassignedDevsListView.getSelectionModel().getSelectedItem();
+            if (selected != null) {
+                assignedDevs.add(selected);
+                updateDevsLists();
+            }
+        });
+
+        editAssignedDevsListView.setOnMouseClicked(event -> {
+            String selected = editAssignedDevsListView.getSelectionModel().getSelectedItem();
+            if (selected != null) {
+                assignedDevs.remove(selected);
+                updateDevsLists();
+            }
+        });
+    }
+
+
+
+
+
 }
