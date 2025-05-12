@@ -78,13 +78,14 @@ public class Schedule {
     }
 
     public boolean projectExistsID(int projectID) {
+        assert projectID >= 0;
 
-        for (int i = 0; i < projects.size(); i++) {
-            if (projects.get(i).getProjectID() == projectID) {
-                return true;
+        for (int i = 0; i < projects.size(); i++) {             //1
+            if (projects.get(i).getProjectID() == projectID) {  //2
+                return true;                                    //3
             }
         }
-        return false;
+        return false;                                           //4
     }
 
 
